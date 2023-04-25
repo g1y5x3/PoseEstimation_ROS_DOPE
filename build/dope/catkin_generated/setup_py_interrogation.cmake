@@ -1,0 +1,6 @@
+set(dope_SETUP_PY_VERSION "0.0.0")
+set(dope_SETUP_PY_SCRIPTS "")
+set(dope_SETUP_PY_PACKAGES "dope")
+set(dope_SETUP_PY_PACKAGE_DIRS "src/dope")
+set(dope_SETUP_PY_MODULES "")
+set(dope_SETUP_PY_MODULE_DIRS "")

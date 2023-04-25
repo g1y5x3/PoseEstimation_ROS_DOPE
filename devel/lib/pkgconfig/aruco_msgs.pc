@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: aruco_msgs
+Description: Description of aruco_msgs
+Version: 0.2.3
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/devel/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: message_runtime geometry_msgs std_msgs

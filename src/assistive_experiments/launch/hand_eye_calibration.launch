@@ -1,0 +1,143 @@
+<launch>
+    <!--==============================-->
+    <!-- TO-DO: Adjustable parameters -->
+    <!--==============================-->
+    
+    <!--==================================-->
+    <!-- 1. Obtain the pose of the marker -->
+    <!--==================================-->
+    <arg name="markerId"        default="27"/>
+    <arg name="markerSize"      default="0.1"/>    <!-- in m -->
+    <arg name="eye"             default="left"/>
+    <arg name="marker_frame"    default="aruco_marker_frame"/>
+    <arg name="ref_frame"       default=""/>  <!-- leave empty and the pose will be published wrt param parent_name -->
+    <arg name="corner_refinement" default="LINES" /> <!-- NONE, HARRIS, LINES, SUBPIX -->
+
+    <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+        <param name="video_device" value="/dev/video0" />
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="pixel_format" value="yuyv" />
+        <param name="camera_frame_id" value="usb_cam" />
+        <param name="io_method" value="mmap"/>
+    </node>
+    
+    <node pkg="aruco_ros" type="single" name="aruco_single">
+        <remap from="/camera_info" to="/usb_cam/camera_info" />
+        <remap from="/image" to="/usb_cam/image_raw" />
+        <param name="image_is_rectified" value="False"/>
+        <param name="marker_size"        value="$(arg markerSize)"/>
+        <param name="marker_id"          value="$(arg markerId)"/>
+        <param name="reference_frame"    value="$(arg ref_frame)"/>   <!-- frame in which the marker pose will be refered -->
+        <param name="camera_frame"       value="usb_cam_frame"/>
+        <param name="marker_frame"       value="$(arg marker_frame)" />
+        <param name="corner_refinement"  value="$(arg corner_refinement)" />
+    </node>
+
+
+    <!--==========================-->
+    <!-- 2. Start the MICO driver -->
+    <!--==========================-->
+    <arg name="use_urdf" default="true"/>
+    <arg name="kinova_robotType" default="m1n6s200" />
+
+    <arg name="kinova_robotName" default="$(arg kinova_robotType)"/>
+    <arg name="kinova_robotSerial" default="not_set" />
+
+    <!-- If the node handles multiple robots uncomment this and configure /config/multiple_robots.yaml" -->
+    <rosparam file="$(find kinova_bringup)/launch/config/multiple_robots.yaml" command="load" />
+
+    <node name="$(arg kinova_robotName)_driver" pkg="kinova_driver" type="kinova_arm_driver" output="screen" cwd="node" args="$(arg kinova_robotType)">
+        <rosparam file="$(find kinova_bringup)/launch/config/robot_parameters.yaml" command="load" />
+        <param name="serial_number" value="$(arg kinova_robotSerial)" />   
+        <param name="robot_name" value="$(arg kinova_robotName)" />   
+        <param name="robot_type" value="$(arg kinova_robotType)" />   
+    </node>
+        
+    <group unless="$(arg use_urdf)">
+        <node name="$(arg kinova_robotName)_tf_updater" pkg="kinova_driver" type="kinova_tf_updater" output="screen" cwd="node" args="$(arg kinova_robotType)">
+        <remap from="/$(arg kinova_robotName)_tf_updater/in/joint_angles" to="/$(arg kinova_robotName)_driver/out/joint_angles"/>
+        <param name="base_frame" value="root"/>
+        </node>
+    </group>
+
+    <group if="$(arg use_urdf)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find kinova_description)/urdf/$(arg kinova_robotType)_standalone.xacro'" />
+        <node name="$(arg kinova_robotName)_state_publisher"
+            pkg="robot_state_publisher"
+            type="robot_state_publisher">
+        <remap from="joint_states" to="/$(arg kinova_robotName)_driver/out/joint_state"/>
+        </node>
+    </group>
+    
+    <!--==============================================================-->
+    <!-- 3. Launch Moveit for controlling the robot and visualization -->
+    <!--==============================================================-->
+    <param name="robot_type" value="m1n6s200" />
+    <param name="/pick_place_demo/arm/solve_type" value="Manipulation2" />
+    <param name="/pick_place_demo/arm/kinematics_solver_timeout" value="0.05" />
+
+    <!-- By default, we do not start a database (it can be large) -->
+    <arg name="db" default="false" />
+    <!-- Allow user to specify database location -->
+    <arg name="db_path" default="$(find m1n6s200_moveit_config)/default_warehouse_mongo_db" />
+
+    <!-- By default, we are not in debug mode -->
+    <arg name="debug" default="false" />
+
+    <!-- By default, we show rviz -->
+    <arg name="show_rviz" default="true" />
+    
+    <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+    <include file="$(find m1n6s200_moveit_config)/launch/planning_context.launch">
+        <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <!-- If needed, broadcast static tf for robot root -->
+    
+    <!-- Run joint trajectory action server, which receives planned motion goal under "follow_joint_trajectory", and publish ROS standard trajectory via topic "command". Then for specified robot, the trajectory will be interpreted to their own joint trajectory controller -->
+    <node name="m1n6s200_joint_trajectory_action_server" pkg="kinova_driver" type="joint_trajectory_action_server" output="screen" respawn="false" args="m1n6s200"/>
+
+    <!-- Run gripper command action server, which receives planned motion goal under "gripper_command". After receiving the command from Moveit Rviz Plugin, this node act as an actionlib client and send the goal to the finger position action server from kinova_driver.  -->
+    <node name="m1n6s200_gripper_command_action_server" pkg="kinova_driver" type="gripper_command_action_server" output="screen" respawn="false" args="m1n6s200"/>
+
+
+    <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find m1n6s200_moveit_config)/launch/move_group_m1n6s200.launch">
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+        <arg name="info" value="true"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="joint_states_ns" value="/m1n6s200_driver/out/joint_state"/> 
+        <arg name="controller_manager" value="m1n6s200"/> 
+    </include>
+
+    <!-- kinova-driver Controller parameters-->   
+    <rosparam file="$(find m1n6s200_moveit_config)/config/controllers.yaml"/> 
+
+    <!-- Run Rviz and load the default config to see the state of the move_group node -->
+    <include file="$(find m1n6s200_moveit_config)/launch/moveit_rviz.launch" if="$(arg show_rviz)">
+        <arg name="config" value="true"/>
+        <arg name="debug" value="$(arg debug)"/>
+    </include>
+
+    <!-- If database loading was enabled, start mongodb as well -->
+    <include file="$(find m1n6s200_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
+        <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
+    </include>
+    
+    <!--================================-->
+    <!-- 4. Run the calibration package -->
+    <!--================================-->
+    <include file="$(find easy_handeye)/launch/calibrate.launch">
+        <arg name="eye_on_hand" value="false"/>
+        <arg name="namespace_prefix" value="my_eob_calib"/>
+
+        <arg name="robot_base_frame" value="/m1n6s200_link_base"/>
+        <arg name="robot_effector_frame" value="/m1n6s200_end_effector"/>
+
+        <arg name="tracking_base_frame" value="/usb_cam_frame"/>
+        <arg name="tracking_marker_frame" value="/aruco_marker_frame"/>
+
+    </include>
+</launch>

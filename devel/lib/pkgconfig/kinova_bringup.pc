@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: kinova_bringup
+Description: Description of kinova_bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: 

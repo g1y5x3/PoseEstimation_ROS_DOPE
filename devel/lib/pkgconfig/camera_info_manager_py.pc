@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: camera_info_manager_py
+Description: Description of camera_info_manager_py
+Version: 0.2.3
+Cflags: 
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: sensor_msgs

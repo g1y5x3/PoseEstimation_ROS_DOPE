@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/install
+
+Name: kinova_gazebo
+Description: Description of kinova_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/install/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: dope
+Description: Description of dope
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: geometry_msgs sensor_msgs std_msgs vision_msgs visualization_msgs

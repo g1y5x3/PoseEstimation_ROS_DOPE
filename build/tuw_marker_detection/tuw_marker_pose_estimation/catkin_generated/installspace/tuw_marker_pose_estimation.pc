@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/install
+
+Name: tuw_marker_pose_estimation
+Description: Description of tuw_marker_pose_estimation
+Version: 0.0.7
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/install/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/install/lib 
+Requires: 

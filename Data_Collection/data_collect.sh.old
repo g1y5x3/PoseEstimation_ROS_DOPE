@@ -1,0 +1,17 @@
+#!/bin/bash
+source /opt/ros/kinetic/setup.bash
+export ROS_MASTER_URI=http://10.14.1.204:11311
+export ROS_IP=10.14.1.11
+
+echo 'Start Data Collection!'
+
+# Command for data collection
+rostopic echo /dope/pose_mustard > dope_position_$1.txt &
+
+sleep 30
+
+echo 'Data Collection Completed!'
+
+killall -e rostopic
+
+exit 1

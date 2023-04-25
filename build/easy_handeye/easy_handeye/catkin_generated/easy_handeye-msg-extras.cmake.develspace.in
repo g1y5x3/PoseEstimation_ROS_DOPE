@@ -1,0 +1,2 @@
+set(easy_handeye_MESSAGE_FILES "/home/iris/yg5d6/Workspace/PoseEstimation/src/easy_handeye/easy_handeye/msg/HandeyeCalibration.msg;/home/iris/yg5d6/Workspace/PoseEstimation/src/easy_handeye/easy_handeye/msg/SampleList.msg")
+set(easy_handeye_SERVICE_FILES "/home/iris/yg5d6/Workspace/PoseEstimation/src/easy_handeye/easy_handeye/srv/TakeSample.srv;/home/iris/yg5d6/Workspace/PoseEstimation/src/easy_handeye/easy_handeye/srv/ComputeCalibration.srv;/home/iris/yg5d6/Workspace/PoseEstimation/src/easy_handeye/easy_handeye/srv/RemoveSample.srv")

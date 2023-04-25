@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: visp_hand2eye_calibration
+Description: Description of visp_hand2eye_calibration
+Version: 0.11.1
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/devel/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: geometry_msgs message_runtime roscpp sensor_msgs std_msgs

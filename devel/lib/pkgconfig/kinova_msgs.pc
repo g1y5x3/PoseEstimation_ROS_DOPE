@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: kinova_msgs
+Description: Description of kinova_msgs
+Version: 0.0.1
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/devel/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: actionlib_msgs geometry_msgs message_runtime

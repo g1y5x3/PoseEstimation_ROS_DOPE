@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/devel
+
+Name: kinova_arm_moveit_demo
+Description: Description of kinova_arm_moveit_demo
+Version: 0.6.3
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/src/kinova-ros/kinova_moveit/kinova_arm_moveit_demo/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/devel/lib 
+Requires: moveit_core moveit_ros_planning_interface interactive_markers

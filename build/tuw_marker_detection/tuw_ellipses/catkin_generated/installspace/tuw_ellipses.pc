@@ -1,0 +1,8 @@
+prefix=/home/iris/yg5d6/Workspace/PoseEstimation/install
+
+Name: tuw_ellipses
+Description: Description of tuw_ellipses
+Version: 0.0.7
+Cflags: -I/home/iris/yg5d6/Workspace/PoseEstimation/install/include
+Libs: -L/home/iris/yg5d6/Workspace/PoseEstimation/install/lib 
+Requires: 

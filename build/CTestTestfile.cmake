@@ -1,0 +1,37 @@
+# CMake generated Testfile for 
+# Source directory: /home/iris/yg5d6/Workspace/PoseEstimation/src
+# Build directory: /home/iris/yg5d6/Workspace/PoseEstimation/build
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+subdirs(gtest)
+subdirs(kinova-ros/kinova_bringup)
+subdirs(kinova-ros/kinova_control)
+subdirs(kinova-ros/kinova_gazebo)
+subdirs(aruco_ros/aruco)
+subdirs(easy_handeye/rqt_easy_handeye)
+subdirs(aruco_ros/aruco_msgs)
+subdirs(vision_visp/vision_visp)
+subdirs(assistive_experiments)
+subdirs(kinova-ros/kinova_msgs)
+subdirs(camera_info_manager_py)
+subdirs(aruco_ros/aruco_ros)
+subdirs(kinova-ros/kinova_driver)
+subdirs(kinova-ros/kinova_demo)
+subdirs(kinova-ros/kinova_moveit/inverse_kinematics_plugins/ikfast/j2n6s300_ikfast)
+subdirs(kinova-ros/kinova_moveit/inverse_kinematics_plugins/ikfast/j2s7s300_ikfast)
+subdirs(kinova-ros/kinova_moveit/inverse_kinematics_plugins/ikfast/m1n6s300_ikfast)
+subdirs(vision_msgs)
+subdirs(dope)
+subdirs(vision_visp/visp_bridge)
+subdirs(vision_visp/visp_camera_calibration)
+subdirs(vision_visp/visp_hand2eye_calibration)
+subdirs(easy_handeye/easy_handeye)
+subdirs(vision_visp/visp_tracker)
+subdirs(vision_visp/visp_auto_tracker)
+subdirs(kinova-ros/kinova_moveit/kinova_arm_moveit_demo)
+subdirs(kinova-ros/kinova_description)
+subdirs(kinova-ros/kinova_moveit/robot_configs/j2n6s300_moveit_config)
+subdirs(kinova-ros/kinova_moveit/robot_configs/j2s7s300_moveit_config)
+subdirs(kinova-ros/kinova_moveit/robot_configs/m1n6s200_moveit_config)
+subdirs(kinova-ros/kinova_moveit/robot_configs/m1n6s300_moveit_config)

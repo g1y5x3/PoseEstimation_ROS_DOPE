@@ -1,0 +1,10 @@
+
+libdir=/home/iris/yg5d6/Workspace/PoseEstimation/build/tuw_marker_detection/tuw_aruco/aruco-2.0.10
+includedir=/home/iris/yg5d6/Workspace/PoseEstimation/src/tuw_marker_detection/tuw_aruco/aruco-2.0.10/src
+
+Name: aruco
+Description: ArUco: a minimal library for Augmented Reality applications based on OpenCv, uninstalled Version.
+Version: 2.0.9
+Requires: opencv >= 2.1.0
+Libs: -L${libdir} -laruco
+Cflags: -I${includedir}

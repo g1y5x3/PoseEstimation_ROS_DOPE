@@ -1,0 +1,3 @@
+rosrun tf2_ros static_transform_publisher -0.074, -0.131, 0.666 0.723, 0.688, 0.030, -0.045 /stereo/left checkerboard
+
+rosrun tf2_ros static_transform_publisher 0.2110 -0.0254 0 0  0.7071 0 -0.7071 checkerboard world
