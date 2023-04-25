@@ -1,3 +1,8 @@
+Source Code used for experiments in "Object Detection and Pose Estimation Using CNN in Embedded Hardware for Assistive Technology"
+
+https://ieeexplore.ieee.org/abstract/document/9002767
+
+
 1. Make sure to source the environment file before you run any of the packages, otherwise it won't run.
 
     1) For running the pacakges locally
